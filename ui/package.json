@@ -11,6 +11,15 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^1.6.7"
+    "@astrojs/react": "^1.2.2",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "astro": "^1.6.7",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.0"
   }
 }
