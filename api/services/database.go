@@ -21,30 +21,34 @@ func Connect() error {
 	return nil
 }
 
-func FindPosts() ([]any, error) {
-	pgxRows, err := pool.Query(context.Background(), "SELECT * FROM posts")
+func FindPosts() ([]types.Post, error) {
+	rows, err := pool.Query(context.Background(), "SELECT * FROM posts")
 
 	if err != nil {
-		return []any{}, err
+		return []types.Post{}, err
+	}
+	posts := []types.Post{}
+	for rows.Next() {
+		var post types.Post
+		err := rows.Scan(&post.Id, &post.Created_at, &post.Body, &post.Author, &post.Upvotes, &post.Downvotes)
+
+		if err != nil {
+			return []types.Post{}, err
+		}
+		posts = append(posts, post)
 	}
 
-	rows, err := pgxRows.Values()
-
-	if err != nil {
-		return []any{}, err
-	}
-
-	return rows, nil
+	return posts, nil
 }
 
-func FindPostById(id int) (any, error) {
-	var post any
-	err := pool.QueryRow(context.Background(), "SELECT * FROM posts WHERE id='"+fmt.Sprint(id)+"'").Scan(&post)
+func FindPostById(id int) (types.Post, error) {
+	query := fmt.Sprintf("SELECT * FROM posts WHERE id=%d", id)
+	var post types.Post
+	err := pool.QueryRow(context.Background(), query).Scan(&post.Id, &post.Created_at, &post.Body, &post.Author, &post.Upvotes, &post.Downvotes)
 
 	if err != nil {
-		return []any{}, err
+		return types.Post{}, err
 	}
-
 	return post, nil
 }
 
@@ -57,6 +61,16 @@ func SavePost(post types.JsonPost) (types.Post, error) {
 	if err != nil {
 		return types.Post{}, err
 	}
+	return row, nil
+}
 
+func UpdatePost(id string, post types.JsonPost) (types.Post, error) {
+	var row types.Post
+	query := fmt.Sprintf("UPDATE posts SET body='%s', upvotes='%d', downvotes='%d' WHERE id=%s RETURNING (id, created_at, body, author, upvotes, downvotes)", post.Body, post.Upvotes, post.Downvotes, id)
+	err := pool.QueryRow(context.Background(), query).Scan(&row)
+
+	if err != nil {
+		return types.Post{}, err
+	}
 	return row, nil
 }

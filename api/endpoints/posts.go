@@ -51,3 +51,23 @@ func PostPostsEndpoint(c *gin.Context) {
 		c.JSON(http.StatusOK, newPost)
 	}
 }
+
+func UpdatePostEndpoint(c *gin.Context) {
+	var post types.JsonPost
+
+	if err := c.BindJSON(&post); err != nil {
+		c.String(http.StatusBadRequest, "Bad JSON")
+	}
+
+	newPost, err := services.UpdatePost(c.Param("id"), post)
+
+	if err != nil {
+		if err == pgx.ErrNoRows {
+			c.String(http.StatusNotFound, "Not found")
+		} else {
+			c.JSON(http.StatusInternalServerError, err)
+		}
+	} else {
+		c.JSON(http.StatusOK, newPost)
+	}
+}

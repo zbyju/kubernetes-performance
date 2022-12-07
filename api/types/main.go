@@ -7,8 +7,8 @@ type Post struct {
 	Created_at time.Time
 	Body       string
 	Author     string
-	Upvotes    string
-	Downvotes  string
+	Upvotes    int
+	Downvotes  int
 }
 
 type Comment struct {

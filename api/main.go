@@ -27,7 +27,9 @@ func main() {
 
 		api.POST("/posts", endpoints.PostPostsEndpoint)
 		api.POST("/posts/:id/comments", endpoints.PostCommentOfPostEndpoint)
+
+		api.PUT("/posts/:id", endpoints.UpdatePostEndpoint)
 	}
 
-	r.Run(":4000") // listen and serve on 0.0.0.0:8080
+	r.Run(":4000")
 }
