@@ -1,1 +1,15 @@
-/* Create your schema here */
+CREATE TABLE posts (
+  id SERIAL PRIMARY KEY,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  body TEXT NOT NULL,
+  user TEXT NOT NULL,
+  upvotes INTEGER DEFAULT 0 NOT NULL,
+  downvotes INTEGER DEFAULT 0 NOT NULL
+);
+
+CREATE TABLE comments (
+  id SERIAL PRIMARY KEY,
+  post_id INTEGER REFERENCES posts(id),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  user TEXT NOT NULL
+);
