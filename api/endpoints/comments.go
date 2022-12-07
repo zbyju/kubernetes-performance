@@ -3,13 +3,21 @@ package endpoints
 import (
 	"api/services"
 	"api/types"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 func GetCommentsEndpoint(c *gin.Context) {
+	rows, err := services.FindComments()
 
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusInternalServerError, err)
+	} else {
+		c.JSON(http.StatusOK, rows)
+	}
 }
 
 func GetCommentOfPostEndpoint(c *gin.Context) {

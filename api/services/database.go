@@ -41,6 +41,26 @@ func FindPosts() ([]types.Post, error) {
 	return posts, nil
 }
 
+func FindComments() ([]types.Comment, error) {
+	rows, err := pool.Query(context.Background(), "SELECT * FROM comments")
+
+	if err != nil {
+		return []types.Comment{}, err
+	}
+	comments := []types.Comment{}
+	for rows.Next() {
+		var comment types.Comment
+		err := rows.Scan(&comment.Id, &comment.Post_id, &comment.Created_at, &comment.Body, &comment.Author)
+
+		if err != nil {
+			return []types.Comment{}, err
+		}
+		comments = append(comments, comment)
+	}
+
+	return comments, nil
+}
+
 func FindPostById(id int) (types.Post, error) {
 	query := fmt.Sprintf("SELECT * FROM posts WHERE id=%d", id)
 	var post types.Post
