@@ -72,6 +72,28 @@ func FindPostById(id int) (types.Post, error) {
 	return post, nil
 }
 
+func FindCommentsByPostId(postId string) ([]types.Comment, error) {
+	query := fmt.Sprintf("SELECT * FROM comments WHERE post_id=%s", postId)
+	rows, err := pool.Query(context.Background(), query)
+
+	if err != nil {
+		return []types.Comment{}, err
+	}
+
+	comments := []types.Comment{}
+	for rows.Next() {
+		var comment types.Comment
+		err := rows.Scan(&comment.Id, &comment.Post_id, &comment.Created_at, &comment.Body, &comment.Author)
+
+		if err != nil {
+			return []types.Comment{}, err
+		}
+		comments = append(comments, comment)
+	}
+
+	return comments, nil
+}
+
 func SavePost(post types.JsonPost) (types.Post, error) {
 	query := fmt.Sprintf("INSERT INTO posts(body, author) VALUES('%s', '%s') RETURNING (id, created_at, body, author, upvotes, downvotes)", post.Body, post.Author)
 

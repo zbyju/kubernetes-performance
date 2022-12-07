@@ -21,7 +21,14 @@ func GetCommentsEndpoint(c *gin.Context) {
 }
 
 func GetCommentOfPostEndpoint(c *gin.Context) {
+	rows, err := services.FindCommentsByPostId(c.Param("id"))
 
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusInternalServerError, err)
+	} else {
+		c.JSON(http.StatusOK, rows)
+	}
 }
 
 func PostCommentOfPostEndpoint(c *gin.Context) {
