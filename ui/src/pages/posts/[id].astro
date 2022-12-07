@@ -1,14 +1,45 @@
 ---
+import Card from '../../components/Card.astro';
 import Layout from '../../layouts/Layout.astro';
+import type { PostWithComments } from '../../types/post.types';
 
 const { id } = Astro.params;
+
+const post: PostWithComments = {
+	id: 1,
+	body: "Test post asdfkas fda sfd asf das fd asf dsafd asf sad f asd fas df as dfas f das fd asf ads fsa df asd fas df asd fsa fdas fa. asdf asd fas fd asf ssadfasdhfashfdkas fkdhsafgaldhskfljhasdlkf aslhdfkjlas hflkdahs fkldjhsa f",
+	comments: [{
+		body: "This is the first comment"
+	}]
+} 
 ---
 
-<Layout title="Jodel">
-	<main class={"post-" + id}>
-		<h1>Post</h1>
+<Layout title={`Post ${id} - Jodel`}>
+	<main class={"post-wrapper post-" + id}>
+		<h1>Post {id}</h1>
+		<Card body={post.body} />
+		<h2>Comments:</h2>
+		<div class="post-comments">
+			{post.comments.map(comment => <div class="post-comment"><p>{comment.body}</p></div>)}
+		</div>
 	</main>
 </Layout>
 
 <style>
+	.post {
+		border: 1px solid #2d2d2d;
+		border-radius: 10px;
+		width: 80%;
+		padding: 10px;
+		margin: auto;
+	}
+	.post-wrapper h1, h2, p {
+		margin: 0
+	}
+	.post-comment {
+		background: #fefefe;
+		padding: 10px 5px;
+		width: calc(100% - 10px);
+		border-radius: 10px;
+	}
 </style>
