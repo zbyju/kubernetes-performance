@@ -14,7 +14,7 @@ export default function UserId() {
     } else {
       setUserId(id);
     }
-  });
+  }, []);
 
   return (
     <>
