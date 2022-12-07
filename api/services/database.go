@@ -64,6 +64,20 @@ func SavePost(post types.JsonPost) (types.Post, error) {
 	return row, nil
 }
 
+func SaveComment(postId string, comment types.JsonComment) (types.Comment, error) {
+	query := fmt.Sprintf("INSERT INTO comments(post_id, body, author) VALUES('%s', '%s', '%s') RETURNING (id, post_id, created_at, body, author)", postId, comment.Body, comment.Author)
+
+	var row types.Comment
+
+	err := pool.QueryRow(context.Background(), query).Scan(&row)
+	if err != nil {
+		fmt.Println(err)
+		return types.Comment{}, err
+	}
+
+	return row, nil
+}
+
 func UpdatePost(id string, post types.JsonPost) (types.Post, error) {
 	var row types.Post
 	query := fmt.Sprintf("UPDATE posts SET body='%s', upvotes='%d', downvotes='%d' WHERE id=%s RETURNING (id, created_at, body, author, upvotes, downvotes)", post.Body, post.Upvotes, post.Downvotes, id)

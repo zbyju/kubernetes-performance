@@ -8,6 +8,7 @@ type JsonPost struct {
 }
 
 type JsonComment struct {
-	PostId int    `json:"postId"`
+	PostId int    `json:"postId,omitempty"`
+	Body   string `json:"body"`
 	Author string `json:"author"`
 }

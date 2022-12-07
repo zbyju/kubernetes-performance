@@ -15,5 +15,6 @@ type Comment struct {
 	Id         int
 	Post_id    int
 	Created_at time.Time
+	Body       string
 	Author     string
 }
