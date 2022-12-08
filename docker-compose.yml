@@ -12,18 +12,18 @@ services:
   #     - api
   #   command: [nginx-debug, '-g', 'daemon off;']
 
-  # ui:
-  #   build: ui
-  #   image: ui
-  #   restart: "no"
-  #   volumes:
-  #     - ./ui/:/app
-  #   ports:
-  #     - 3000:3000
-  #   depends_on:
-  #     - api
-  #   env_file:
-  #     - project.env
+  ui:
+    build: ui
+    image: ui
+    restart: "no"
+    volumes:
+      - ./ui/:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - api
+    env_file:
+      - project.env
 
   api:
     build: api
