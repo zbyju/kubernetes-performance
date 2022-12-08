@@ -16,7 +16,10 @@ const post: PostWithComments = {
 
 <Layout title={`Post ${id} - Jodel`}>
 	<main class={"post-wrapper post-" + id}>
-		<h1>Post {id}</h1>
+		<div class="post-heading">
+			<h1>Post {id}</h1>
+			<a href="/">Back home</a>
+		</div>
 		<Card body={post.body} />
 		<h2>Comments:</h2>
 		<div class="post-comments">
@@ -41,5 +44,29 @@ const post: PostWithComments = {
 		padding: 10px 5px;
 		width: calc(100% - 10px);
 		border-radius: 10px;
+	}
+
+	.post-heading {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		width: 100%;
+		margin-bottom: 10px;
+	}
+
+	.post-heading a {
+		background-color: rgba(255, 255, 255, 0);
+		border: 1px solid #8d8d8d;
+		border-radius: 8px;
+		text-decoration: none;
+		text-align: center;
+		display: inline-flex;
+		align-items: center;
+		padding: 10px 5px;
+		cursor: pointer;
+		transition: 0.5s all;
+	}
+  .post-heading a:hover {
+		background-color: white;	
 	}
 </style>
