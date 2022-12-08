@@ -1,21 +1,44 @@
 ---
 export interface Props {
 	body: string;
+	id: number;
 	href?: string;
 }
 
-const { href, body } = Astro.props;
-
+const { href, body, id } = Astro.props;
 ---
 
-<div class="card">
-	{ href === undefined ? <p class="link-card">{body}</p> : <a href={href} class="link-card"><p>{body}</p></a>}
-	<div class="card-voting">
-		<button class="up">˄</button>
-		<span class="votes">0</span>
-		<button class="down">˅</button>
+<astro-card data-id={id}>
+	<div class="card">
+		{ href === undefined ? <p class="link-card">{body}</p> : <a href={href} class="link-card"><p>{body}</p></a>}
+		<div class="card-voting">
+			<button class={`up up-${id}`}>˄</button>
+			<span class="votes">0</span>
+			<button class={`down down-${id}`}>˅</button>
+		</div>
 	</div>
-</div>
+</astro-card>
+
+<script>
+class AstroCard extends HTMLElement {
+	constructor() {
+		super()
+
+		const id = this.dataset.id;
+		const downvoteBtn = document.querySelector('button.down-' + id)
+		downvoteBtn?.addEventListener('click', () => {
+			console.log("test" + id);
+		})
+		const upvoteBtn = document.querySelector('button.up-' + id)
+		upvoteBtn?.addEventListener('click', () => {
+			console.log("test" + id);
+		})
+	}
+}
+
+customElements.define("astro-card", AstroCard)
+</script>
+
 <style>
 
 	.card {

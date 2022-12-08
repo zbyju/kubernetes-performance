@@ -1,28 +1,14 @@
 ---
+import { fetchPosts } from "../services/api";
+import type { Post } from "../types/post.types";
 import Card from "./Card.astro";
 
-const posts = [
-  {
-    id: 1,
-    text: "This is a post",
-    comments: [
-      "Comment one", 
-      "Comment two"
-    ]
-  },
-  {
-    id: 2,
-    text: "A second post asdfa  fsafasdf as df asdf as df a fasd f sad fsdafdas",
-    comments: [
-      "My comment xd", 
-      "hahahahha"
-    ]
-  }
-]
+const posts = await fetchPosts()
+console.log(posts);
 ---
 
 <div class="list-posts">
-  { posts.map(p => <Card body={p.text} href={"/posts/" + p.id} />)}
+  { posts.map(p => <Card body={p.body} href={"/posts/" + p.id} id={p.id} />)}
 </div>
 
 <style>
