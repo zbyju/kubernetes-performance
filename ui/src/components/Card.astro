@@ -1,4 +1,5 @@
 ---
+import moment from 'moment';
 import type { Post } from '../types/post.types';
 
 export interface Props {
@@ -7,11 +8,15 @@ export interface Props {
 }
 
 const { post, href } = Astro.props;
+const time = moment(post.createdAt).format("DD.MM.YYYY hh:mm:ss")
 ---
 
 <astro-card data-id={post.id} data-ups={post.upvotes} data-downs={post.downvotes}>
 	<div class="card">
-		{ href === undefined ? <p class="link-card">{post.body}</p> : <a href={href} class="link-card"><p>{post.body}</p></a>}
+		<div class="card-body">
+			<span>Posted by: <i>{post.author}</i> at <i>{time}</i></span>
+			{ href === undefined ? <p class="link-card">{post.body}</p> : <a href={href} class="link-card"><p>{post.body}</p></a>}
+		</div>
 		<div class="card-voting">
 			<button class={`up up-${post.id}`}>˄</button>
 			<span class={`votes votes-${post.id}`}>0</span>
@@ -67,6 +72,27 @@ customElements.define("astro-card", AstroCard)
 		display: flex;
 		background-color: white;
 		border-radius: 0.5rem;
+	}
+
+	.card .card-body {
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		padding: 20px 0;
+	}
+
+	.card .card-body {
+		margin: 10px 0;
+		padding: 0;
+		color: #666;
+		font-size: 0.8em;
+	}
+
+	.card .card-body p {
+		padding: 0;
+		margin: 10px 0;
+		color: #000;
+		font-size: 1.2em;
 	}
 
 	.card .card-voting {
