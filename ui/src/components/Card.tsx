@@ -13,20 +13,18 @@ export default function Card({ post, href }: Props) {
   const [upvotes, setUpvotes] = useState(post.upvotes);
   const [downvotes, setDownvotes] = useState(post.downvotes);
 
+  const body = (
+    <div className="card-body">
+      <span>
+        Posted by: <i>{post.author}</i> at <i>{time}</i>
+      </span>
+      <p className="link-card">{post.body}</p>
+    </div>
+  );
+
   return (
     <div className="card">
-      <div className="card-body">
-        <span>
-          Posted by: <i>{post.author}</i> at <i>{time}</i>
-        </span>
-        {href === undefined ? (
-          <p className="link-card">{post.body}</p>
-        ) : (
-          <a href={href} className="link-card">
-            <p>{post.body}</p>
-          </a>
-        )}
-      </div>
+      {href !== undefined ? <a href={href}>{body}</a> : body}
       <div className="card-voting">
         <button
           className={`up up-${post.id}`}
