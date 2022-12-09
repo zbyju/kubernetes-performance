@@ -1,5 +1,5 @@
 ---
-import AddPost from '../components/AddPost.astro';
+import AddPost from '../components/AddPost';
 import ListPosts from '../components/ListPosts';
 import UserId from '../components/UserId';
 import Layout from '../layouts/Layout.astro';
@@ -9,7 +9,7 @@ import Layout from '../layouts/Layout.astro';
 	<main>
 		<h1>Home</h1>
 		<UserId client:load/>
-		<AddPost />
+		<AddPost client:load />
 		<ListPosts client:load />
 	</main>
 </Layout>

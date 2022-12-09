@@ -1,15 +1,14 @@
 import { useStore } from "@nanostores/react";
 import { useEffect } from "react";
 import { fetchPosts } from "../services/api";
-import { posts } from "../stores/posts";
+import { latestPosts, posts } from "../stores/posts";
 import Card from "./Card";
 
 export default function ListPosts() {
-  const $posts = useStore(posts);
+  const $posts = useStore(latestPosts);
 
   async function initPosts() {
-    const tmp = await fetchPosts();
-    posts.set(tmp);
+    posts.set(await fetchPosts());
   }
 
   useEffect(() => {

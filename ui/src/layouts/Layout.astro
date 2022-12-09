@@ -141,4 +141,28 @@ const { title } = Astro.props;
 	.link-card-link:is(:hover, :focus-within) h2 {
 		color: rgb(var(--accent));
 	}
+	.add-post {
+    margin: 10px 0;
+  }
+  .add-post-input {
+    padding: 5px;
+    width: calc(100% - 10px);
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  .add-post-submit {
+    margin: 5px 0;
+    padding: 10px 15px;
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid #666;
+    border-radius: 5px;
+    text-transform: capitalize;
+    font-size: 1.2em;
+    font-weight: 400;
+    transition: 0.5s all;
+    cursor: pointer;
+  }
+  .add-post-submit:hover {
+    background-color: rgba(255, 255, 255, 1);
+  }
 </style>
