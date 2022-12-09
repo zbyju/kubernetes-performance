@@ -61,8 +61,8 @@ func FindComments() ([]types.Comment, error) {
 	return comments, nil
 }
 
-func FindPostById(id int) (types.Post, error) {
-	query := fmt.Sprintf("SELECT * FROM posts WHERE id=%d ORDER BY created_at DESC", id)
+func FindPostById(id string) (types.Post, error) {
+	query := fmt.Sprintf("SELECT * FROM posts WHERE id=%s ORDER BY created_at DESC", id)
 	var post types.Post
 	err := pool.QueryRow(context.Background(), query).Scan(&post.Id, &post.Created_at, &post.Body, &post.Author, &post.Upvotes, &post.Downvotes)
 

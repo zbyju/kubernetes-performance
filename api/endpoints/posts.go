@@ -22,7 +22,7 @@ func GetPostsEndpoint(c *gin.Context) {
 }
 
 func GetPostEndpoint(c *gin.Context) {
-	post, err := services.FindPostById(1)
+	post, err := services.FindPostById(c.Param("id"))
 
 	if err != nil {
 		fmt.Println(err)
