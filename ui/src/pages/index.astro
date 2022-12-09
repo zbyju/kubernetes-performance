@@ -1,6 +1,6 @@
 ---
 import AddPost from '../components/AddPost.astro';
-import ListPosts from '../components/ListPosts.astro';
+import ListPosts from '../components/ListPosts';
 import UserId from '../components/UserId';
 import Layout from '../layouts/Layout.astro';
 ---
@@ -10,10 +10,15 @@ import Layout from '../layouts/Layout.astro';
 		<h1>Home</h1>
 		<UserId client:load/>
 		<AddPost />
-		<ListPosts />
+		<ListPosts client:load />
 	</main>
 </Layout>
 
-<style>
-	
+<style is:global>
+	.list-posts {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 5px;
+  }
 </style>
