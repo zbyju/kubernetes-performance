@@ -36,6 +36,7 @@ func PostCommentOfPostEndpoint(c *gin.Context) {
 
 	if err := c.BindJSON(&comment); err != nil {
 		c.String(http.StatusBadRequest, "Bad JSON")
+		return
 	}
 
 	newComment, err := services.SaveComment(c.Param("id"), comment)

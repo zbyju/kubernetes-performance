@@ -22,7 +22,7 @@ func Connect() error {
 }
 
 func FindPosts() ([]types.Post, error) {
-	rows, err := pool.Query(context.Background(), "SELECT * FROM posts")
+	rows, err := pool.Query(context.Background(), "SELECT * FROM posts ORDER BY created_at")
 
 	if err != nil {
 		return []types.Post{}, err
@@ -42,7 +42,7 @@ func FindPosts() ([]types.Post, error) {
 }
 
 func FindComments() ([]types.Comment, error) {
-	rows, err := pool.Query(context.Background(), "SELECT * FROM comments")
+	rows, err := pool.Query(context.Background(), "SELECT * FROM comments ORDER BY created_at")
 
 	if err != nil {
 		return []types.Comment{}, err
@@ -62,7 +62,7 @@ func FindComments() ([]types.Comment, error) {
 }
 
 func FindPostById(id int) (types.Post, error) {
-	query := fmt.Sprintf("SELECT * FROM posts WHERE id=%d", id)
+	query := fmt.Sprintf("SELECT * FROM posts WHERE id=%d ORDER BY created_at", id)
 	var post types.Post
 	err := pool.QueryRow(context.Background(), query).Scan(&post.Id, &post.Created_at, &post.Body, &post.Author, &post.Upvotes, &post.Downvotes)
 
@@ -73,7 +73,7 @@ func FindPostById(id int) (types.Post, error) {
 }
 
 func FindCommentsByPostId(postId string) ([]types.Comment, error) {
-	query := fmt.Sprintf("SELECT * FROM comments WHERE post_id=%s", postId)
+	query := fmt.Sprintf("SELECT * FROM comments WHERE post_id=%s ORDER BY created_at", postId)
 	rows, err := pool.Query(context.Background(), query)
 
 	if err != nil {
