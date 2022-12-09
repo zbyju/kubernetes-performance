@@ -9,7 +9,7 @@ export interface Props {
 }
 
 export default function Card({ post, href }: Props) {
-  const time = moment(post.createdAt).format("DD.MM.YYYY hh:mm:ss");
+  const time = moment(post.createdAt).format("DD.MM.YYYY HH:mm:ss");
   const [upvotes, setUpvotes] = useState(post.upvotes);
   const [downvotes, setDownvotes] = useState(post.downvotes);
 
@@ -39,6 +39,7 @@ export default function Card({ post, href }: Props) {
         <button
           className={`down down-${post.id}`}
           onClick={() => {
+            console.log("test");
             downvotePost(post.id);
             setDownvotes(downvotes + 1);
           }}

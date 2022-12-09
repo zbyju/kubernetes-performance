@@ -8,7 +8,6 @@ import type { Post, Comment } from '../../types/post.types';
 const { id } = Astro.params;
 
 const post: Post = await fetchPost(Number(id)) 
-const comments: Comment[] = await fetchComments(Number(id))
 ---
 
 <Layout title={`Post ${id} - Jodel`}>
@@ -17,7 +16,7 @@ const comments: Comment[] = await fetchComments(Number(id))
 			<h1>Post {id}</h1>
 			<a href="/">Back home</a>
 		</div>
-		<Card post={post} />
+		<Card post={post} client:only/>
 		{id !== undefined ? <Comments postId={Number(id)} client:idle /> : null}
 	</main>
 </Layout>
