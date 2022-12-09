@@ -8,7 +8,7 @@ console.log(posts);
 ---
 
 <div class="list-posts">
-  { posts.map(p => <Card body={p.body} href={"/posts/" + p.id} id={p.id} />)}
+  { posts.map(p => <Card post={p} href={"/posts/" + p.id} />)}
 </div>
 
 <style>

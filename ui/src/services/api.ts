@@ -22,7 +22,7 @@ function mapComment(c: any): Comment {
   };
 }
 
-const baseApiUrl = "http://api:4000";
+const baseApiUrl = "http://host.docker.internal:4000";
 
 export async function fetchPosts(): Promise<Post[]> {
   return axios
@@ -40,4 +40,21 @@ export async function fetchComments(postId: number): Promise<Comment[]> {
   return axios
     .get(baseApiUrl + "/api/posts/" + postId + "/comments")
     .then((res) => res.data.map((c: any) => mapComment(c)));
+}
+
+export async function upvotePost(postId: number): Promise<Post> {
+  return axios.put(baseApiUrl + "/api/posts/" + postId + "/upvote");
+}
+
+export async function downvotePost(postId: number): Promise<Post> {
+  return axios.put(baseApiUrl + "/api/posts/" + postId + "/downvote");
+}
+
+export async function savePost(body: string, userId: string): Promise<Post> {
+  return axios
+    .post(baseApiUrl + "/api/posts", {
+      body,
+      author: userId,
+    })
+    .then((res) => mapPost(res.data));
 }

@@ -1,37 +1,57 @@
 ---
+import type { Post } from '../types/post.types';
+
 export interface Props {
-	body: string;
-	id: number;
+	post: Post;
 	href?: string;
 }
 
-const { href, body, id } = Astro.props;
+const { post, href } = Astro.props;
 ---
 
-<astro-card data-id={id}>
+<astro-card data-id={post.id} data-ups={post.upvotes} data-downs={post.downvotes}>
 	<div class="card">
-		{ href === undefined ? <p class="link-card">{body}</p> : <a href={href} class="link-card"><p>{body}</p></a>}
+		{ href === undefined ? <p class="link-card">{post.body}</p> : <a href={href} class="link-card"><p>{post.body}</p></a>}
 		<div class="card-voting">
-			<button class={`up up-${id}`}>˄</button>
-			<span class="votes">0</span>
-			<button class={`down down-${id}`}>˅</button>
+			<button class={`up up-${post.id}`}>˄</button>
+			<span class={`votes votes-${post.id}`}>0</span>
+			<button class={`down down-${post.id}`}>˅</button>
 		</div>
 	</div>
 </astro-card>
 
 <script>
+import { downvotePost, upvotePost } from "../services/api";
+
 class AstroCard extends HTMLElement {
+	postId: number;
+	upvotes: number;
+	downvotes: number
+
+	updateVotes() {
+		const votesEl = document.querySelector("span.votes-" + this.postId)
+		if(votesEl === null) return
+		const votes = this.upvotes - this.downvotes
+		votesEl.textContent = String(votes)
+	}
+
 	constructor() {
 		super()
-
-		const id = this.dataset.id;
-		const downvoteBtn = document.querySelector('button.down-' + id)
+		this.postId = Number(this.dataset.id);
+		this.upvotes = Number(this.dataset.ups)
+		this.downvotes = Number(this.dataset.downs)
+		this.updateVotes()
+		const downvoteBtn = document.querySelector('button.down-' + this.postId)
 		downvoteBtn?.addEventListener('click', () => {
-			console.log("test" + id);
+			downvotePost(this.postId)
+			this.downvotes++
+			this.updateVotes()
 		})
-		const upvoteBtn = document.querySelector('button.up-' + id)
+		const upvoteBtn = document.querySelector('button.up-' + this.postId)
 		upvoteBtn?.addEventListener('click', () => {
-			console.log("test" + id);
+			upvotePost(this.postId)
+			this.upvotes++
+			this.updateVotes()
 		})
 	}
 }

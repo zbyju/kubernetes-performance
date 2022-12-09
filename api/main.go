@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,6 +19,13 @@ func main() {
 		os.Exit(1)
 	}
 
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Content-Type,access-control-allow-origin, access-control-allow-headers"},
+		AllowCredentials: true,
+	}))
+
 	api := r.Group("/api")
 	{
 		api.GET("/posts", endpoints.GetPostsEndpoint)
@@ -29,7 +37,13 @@ func main() {
 		api.POST("/posts/:id/comments", endpoints.PostCommentOfPostEndpoint)
 
 		api.PUT("/posts/:id", endpoints.UpdatePostEndpoint)
+		api.PUT("/posts/:id/upvote", endpoints.UpvotePostEndpoint)
+		api.PUT("/posts/:id/downvote", endpoints.DownvotePostEndpoint)
 	}
+
+	r.NoRoute(func(c *gin.Context) {
+		c.JSON(404, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
+	})
 
 	r.Run(":4000")
 }

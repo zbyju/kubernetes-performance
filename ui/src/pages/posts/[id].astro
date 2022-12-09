@@ -16,7 +16,7 @@ const comments: Comment[] = await fetchComments(Number(id))
 			<h1>Post {id}</h1>
 			<a href="/">Back home</a>
 		</div>
-		<Card body={post.body} id={post.id} />
+		<Card post={post} />
 		<h2>Comments:</h2>
 		<div class="post-comments">
 			{comments.map(comment => <div class="post-comment"><p>{comment.body}</p></div>)}

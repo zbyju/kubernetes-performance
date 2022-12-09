@@ -130,3 +130,23 @@ func UpdatePost(id string, post types.JsonPost) (types.Post, error) {
 	}
 	return row, nil
 }
+
+func UpvotePost(id string) error {
+	query := fmt.Sprintf("UPDATE posts SET upvotes=upvotes + 1 WHERE id=%s", id)
+	_, err := pool.Exec(context.Background(), query)
+
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func DownvotePost(id string) error {
+	query := fmt.Sprintf("UPDATE posts SET downvotes=downvotes + 1 WHERE id=%s", id)
+	_, err := pool.Exec(context.Background(), query)
+
+	if err != nil {
+		return err
+	}
+	return nil
+}

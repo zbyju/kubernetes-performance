@@ -41,6 +41,7 @@ func PostPostsEndpoint(c *gin.Context) {
 
 	if err := c.BindJSON(&post); err != nil {
 		c.String(http.StatusBadRequest, "Bad JSON")
+		return
 	}
 
 	newPost, err := services.SavePost(post)
@@ -69,5 +70,33 @@ func UpdatePostEndpoint(c *gin.Context) {
 		}
 	} else {
 		c.JSON(http.StatusOK, newPost)
+	}
+}
+
+func UpvotePostEndpoint(c *gin.Context) {
+	err := services.UpvotePost(c.Param("id"))
+
+	if err != nil {
+		if err == pgx.ErrNoRows {
+			c.String(http.StatusNotFound, "Not found")
+		} else {
+			c.JSON(http.StatusInternalServerError, err)
+		}
+	} else {
+		c.String(http.StatusOK, "Ok")
+	}
+}
+
+func DownvotePostEndpoint(c *gin.Context) {
+	err := services.DownvotePost(c.Param("id"))
+
+	if err != nil {
+		if err == pgx.ErrNoRows {
+			c.String(http.StatusNotFound, "Not found")
+		} else {
+			c.JSON(http.StatusInternalServerError, err)
+		}
+	} else {
+		c.String(http.StatusOK, "Ok")
 	}
 }

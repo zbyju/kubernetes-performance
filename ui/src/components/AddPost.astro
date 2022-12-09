@@ -7,6 +7,24 @@
   <input type="submit" class="add-post-submit" value="Post" />
 </div>
 
+<script>
+import { savePost } from "../services/api"
+import { generateUserId } from "../services/user"
+
+  const postEl = document.querySelector("input.add-post-submit")
+  const inputEl = document.querySelector("input.add-post-input") as HTMLInputElement
+  postEl?.addEventListener("click", () => {
+    let userId = window.localStorage.getItem("userId")
+
+    if(!userId) {
+      userId = generateUserId()
+      window.localStorage.setItem("userId", userId)
+    }
+    
+    savePost(inputEl.value, userId)
+  })
+</script>
+
 <style>
   .add-post {
     margin: 10px 0;
