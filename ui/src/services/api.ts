@@ -58,3 +58,16 @@ export async function savePost(body: string, userId: string): Promise<Post> {
     })
     .then((res) => mapPost(res.data));
 }
+
+export async function saveComment(
+  postId: number,
+  body: string,
+  userId: string
+): Promise<Comment> {
+  return axios
+    .post(baseApiUrl + "/api/posts/" + postId + "/comments", {
+      body,
+      author: userId,
+    })
+    .then((res) => mapComment(res.data));
+}

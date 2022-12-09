@@ -1,5 +1,6 @@
 ---
 import Card from '../../components/Card';
+import Comments from '../../components/Comments';
 import Layout from '../../layouts/Layout.astro';
 import { fetchComments, fetchPost } from '../../services/api';
 import type { Post, Comment } from '../../types/post.types';
@@ -17,14 +18,11 @@ const comments: Comment[] = await fetchComments(Number(id))
 			<a href="/">Back home</a>
 		</div>
 		<Card post={post} />
-		<h2>Comments:</h2>
-		<div class="post-comments">
-			{comments.map(comment => <div class="post-comment"><p>{comment.body}</p></div>)}
-		</div>
+		{id !== undefined ? <Comments postId={Number(id)} client:idle /> : null}
 	</main>
 </Layout>
 
-<style>
+<style is:global>
 	.post {
 		border: 1px solid #2d2d2d;
 		border-radius: 10px;
