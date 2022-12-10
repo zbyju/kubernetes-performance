@@ -5,8 +5,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 4000
-    targetPort: 4000
-    protocol: TCP
+    - port: 4000
+      targetPort: 4000
+      protocol: TCP
   selector:
     app: api

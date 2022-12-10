@@ -47,5 +47,5 @@ func main() {
 		c.JSON(404, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
 	})
 
-	r.Run(":4000")
+	r.Run("0.0.0.0:4000")
 }

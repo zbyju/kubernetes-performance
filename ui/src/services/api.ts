@@ -22,9 +22,12 @@ function mapComment(c: any): Comment {
   };
 }
 
-const baseApiUrl = "/api";
+const baseApiUrl =
+  import.meta.env.PUBLIC_API_URL || "http://localhost:4000/api";
 
 export async function fetchPosts(): Promise<Post[]> {
+  console.log(baseApiUrl);
+  console.log(import.meta.env.PUBLIC_API_URL);
   return axios
     .get(baseApiUrl + "/posts")
     .then((res) => res.data.map((p: any) => mapPost(p)));
