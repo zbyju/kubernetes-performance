@@ -18,3 +18,10 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 4000
+          env:
+            - name: PGPASS
+              valueFrom:
+                secretKeyRef:
+                  name: my-database-cluster-app
+                  key: pgpass
+                  optional: false

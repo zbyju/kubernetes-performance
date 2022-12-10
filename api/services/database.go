@@ -4,6 +4,8 @@ import (
 	"api/types"
 	"context"
 	"fmt"
+	"os"
+	"strings"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -11,8 +13,16 @@ import (
 var pool *pgxpool.Pool
 
 func Connect() error {
+	pgpass := os.Getenv("PGPASS")
+	pgpass_parts := strings.Split(pgpass, ":")
+	host := strings.Trim(pgpass_parts[0], " \n")
+	port := strings.Trim(pgpass_parts[1], " \n")
+	database := strings.Trim(pgpass_parts[2], " \n")
+	username := strings.Trim(pgpass_parts[3], " \n")
+	password := strings.Trim(pgpass_parts[4], " \n")
 	var err error
-	pool, err = pgxpool.New(context.Background(), "postgresql://username:password@dab-p3-database/database?sslmode=disable")
+	url := fmt.Sprintf("postgresql://%s:%s@%s:%s/%s?sslmode=disable", username, password, host, port, database)
+	pool, err = pgxpool.New(context.Background(), url)
 
 	if err != nil {
 		return err

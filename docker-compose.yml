@@ -55,6 +55,7 @@ services:
       - bridge
 
   flyway:
+    container_name: flyway
     image: flyway/flyway:8.4.0-alpine
     depends_on:
       - database
