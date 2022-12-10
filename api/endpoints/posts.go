@@ -10,6 +10,10 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
+func GenericEndpoint(c *gin.Context) {
+	c.String(http.StatusOK, "Ok")
+}
+
 func GetPostsEndpoint(c *gin.Context) {
 	rows, err := services.FindPosts()
 

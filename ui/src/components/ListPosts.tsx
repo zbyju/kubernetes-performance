@@ -18,7 +18,7 @@ export default function ListPosts() {
   return (
     <div className="list-posts">
       {$posts && $posts.length > 1 ? (
-        $posts.map((p) => <Card post={p} href={"/posts/" + p.id} key={p.id} />)
+        $posts.map((p) => <Card post={p} openable key={p.id} />)
       ) : (
         <p>No posts found</p>
       )}

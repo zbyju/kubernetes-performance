@@ -1,18 +1,16 @@
-FROM node:lts-alpine3.16 as build
+FROM node:lts-alpine3.16
 
 WORKDIR /app
 
-COPY . .
-
 ENV PATH /app/node_modules/.bin:$PATH
 
+COPY package.json /app/package.json
+COPY yarn.lock /app/yarn.lock
+COPY tsconfig.json /app/tsconfig.json
+
 # install node dependencies
-RUN echo "npm install in progress..." && yarn install
+RUN echo "npm install in progress..." && yarn install --frozen-lockfilenpm ci
 
-RUN mkdir -p dist
+EXPOSE 3000
 
-CMD [ "build" ]
-
-# Exposes port 80 by default
-FROM rtsp/lighttpd
-COPY --from=build /app/dist /var/www/html
+CMD [ "astro", "dev", "--host"]

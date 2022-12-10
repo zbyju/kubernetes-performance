@@ -28,6 +28,8 @@ func main() {
 
 	api := r.Group("/api")
 	{
+		api.GET("/", endpoints.GenericEndpoint)
+
 		api.GET("/posts", endpoints.GetPostsEndpoint)
 		api.GET("/posts/:id", endpoints.GetPostEndpoint)
 		api.GET("/comments", endpoints.GetCommentsEndpoint)
