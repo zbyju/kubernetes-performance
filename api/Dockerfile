@@ -4,13 +4,13 @@ ENV GIN_MODE=release
 ENV PORT=4000
 
 WORKDIR /usr/app
-COPY go.mod ./go.mod 
-COPY go.sum ./go.sum
+COPY . ./
 
 RUN apk update && apk add --no-cache git
 RUN go get ./...
 RUN apk add --update nodejs npm
 RUN npm install -g nodemon
+
 
 EXPOSE 4000
 

@@ -22,37 +22,37 @@ function mapComment(c: any): Comment {
   };
 }
 
-const baseApiUrl = "http://host.docker.internal:4000";
+const baseApiUrl = "/api";
 
 export async function fetchPosts(): Promise<Post[]> {
   return axios
-    .get(baseApiUrl + "/api/posts")
+    .get(baseApiUrl + "/posts")
     .then((res) => res.data.map((p: any) => mapPost(p)));
 }
 
 export async function fetchPost(id: number): Promise<Post> {
   return axios
-    .get(baseApiUrl + "/api/posts/" + id)
+    .get(baseApiUrl + "/posts/" + id)
     .then((res) => mapPost(res.data));
 }
 
 export async function fetchComments(postId: number): Promise<Comment[]> {
   return axios
-    .get(baseApiUrl + "/api/posts/" + postId + "/comments")
+    .get(baseApiUrl + "/posts/" + postId + "/comments")
     .then((res) => res.data.map((c: any) => mapComment(c)));
 }
 
 export async function upvotePost(postId: number): Promise<Post> {
-  return axios.put(baseApiUrl + "/api/posts/" + postId + "/upvote");
+  return axios.put(baseApiUrl + "/posts/" + postId + "/upvote");
 }
 
 export async function downvotePost(postId: number): Promise<Post> {
-  return axios.put(baseApiUrl + "/api/posts/" + postId + "/downvote");
+  return axios.put(baseApiUrl + "/posts/" + postId + "/downvote");
 }
 
 export async function savePost(body: string, userId: string): Promise<Post> {
   return axios
-    .post(baseApiUrl + "/api/posts", {
+    .post(baseApiUrl + "/posts", {
       body,
       author: userId,
     })
@@ -65,7 +65,7 @@ export async function saveComment(
   userId: string
 ): Promise<Comment> {
   return axios
-    .post(baseApiUrl + "/api/posts/" + postId + "/comments", {
+    .post(baseApiUrl + "/posts/" + postId + "/comments", {
       body,
       author: userId,
     })
