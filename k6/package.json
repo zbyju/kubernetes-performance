@@ -1,0 +1,16 @@
+{
+  "name": "k6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "k6:index": "k6 run --vus 10 --duration 10s --summary-trend-stats=\"avg,med,p(90),p(95),p(99),p(99.99),count\" index.js",
+    "k6:posts": "k6 run --vus 10 --duration 10s --summary-trend-stats=\"avg,med,p(90),p(95),p(99),p(99.99),count\" posts.js",
+    "k6:comments": "k6 run --vus 10 --duration 10s --summary-trend-stats=\"avg,med,p(90),p(95),p(99),p(99.99),count\" comments.js",
+    "k6:addPost": "k6 run --vus 10 --duration 10s --summary-trend-stats=\"avg,med,p(90),p(95),p(99),p(99.99),count\" addPost.js",
+    "k6:addComment": "k6 run --vus 10 --duration 10s --summary-trend-stats=\"avg,med,p(90),p(95),p(99),p(99.99),count\" addComment.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
